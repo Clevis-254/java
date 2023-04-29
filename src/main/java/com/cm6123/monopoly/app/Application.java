@@ -53,7 +53,6 @@ public final class Application {
         System.out.println("Hello. Welcome to Monopoly.");
         Application a = new Application();
         new Application();
-
         logger.info("Application closing");
     }
 
