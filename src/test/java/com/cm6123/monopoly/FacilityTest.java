@@ -3,6 +3,7 @@ package com.cm6123.monopoly;
 import com.cm6123.monopoly.game.Board;
 import com.cm6123.monopoly.game.Facility;
 
+import com.cm6123.monopoly.game.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class facilityTest {
+public class FacilityTest {
     @Test
     public void testfacility (){
         ArrayList<Facility> facilities = new ArrayList<>();
@@ -21,19 +22,21 @@ public class facilityTest {
     @Test
     public void facilityPosition(){
         Board b = new Board();
-        b.movePlayer();
+        Player p = new Player("Jannet");
+        int dice = p.rolledFigure(b);
+        p.movePlayer(dice,b);
         Facility r = new Facility("road",4);
         Facility y = new Facility("tax-office",5);
         Facility t = new Facility("railway",6);
-        if (b.movePlayer() == 4){
+        if (p.movePlayer(dice,b) == 4){
             String expect = "road";
             String actual = r.facilityName();
             assertEquals(expect,actual);
-        } else if(b.movePlayer() == 5){
+        } else if(p.movePlayer(dice,b) == 5){
             String expect = "tax-office";
             String actual = y.facilityName();
             assertEquals(expect,actual);
-        } else if(b.movePlayer() == 6);{
+        } else if(p.movePlayer(dice,b) == 6);{
             String expect = "railway";
             String actual = t.facilityName();
             assertEquals(expect,actual);

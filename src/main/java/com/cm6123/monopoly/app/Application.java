@@ -1,5 +1,7 @@
 package com.cm6123.monopoly.app;
 
+import com.cm6123.monopoly.game.Board;
+import com.cm6123.monopoly.game.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Scanner;
@@ -16,7 +18,7 @@ public final class Application {
     /**
      * names stores the name of players playing the game.
      */
-    private String[] names;
+    private final String[] names;
 
     private Application() {
         Scanner s = new Scanner(System.in);
@@ -27,16 +29,22 @@ public final class Application {
             System.out.println("Number of players must be between 2 and 10. Please enter again:");
             players = s.nextInt();
         }
-
+        s.nextLine();// consumes the remaining line character.
         names = new String[players];
         // looping through the number of players in the game to get the name of the users.
         for (int i = 0; i < players; i++) {
-            System.out.println("Enter the name of a player");
+            System.out.println("Enter the name of a player"+(i + 1));
             names[i] = s.nextLine();
         }
         for (int i = 0; i< names.length;i++){
             System.out.println("Player " + (i + 1) + " is " + names[i]); // display the name of the players and their number.
         }
+
+        Player[] players = Player.createPlayers(this.players, this.names);
+        for (int i = 0; i < players.length; i++) {
+            logger.info (players[i].getName() + " has been added to the game."); // displays the name of the player in the system.
+        }
+
     }
 
     /**

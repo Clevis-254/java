@@ -45,7 +45,14 @@ public class Property {
         return price;
     }
 
+    /**
+     * @return position returns the position of property.
+     * method that return the position of property.
+     */
 
+    public Integer getPosition(){
+        return position;
+    }
     /**
      * enters properties into the board.
      * @param properties represents the properties name.
@@ -70,12 +77,14 @@ public class Property {
      */
     public String propertyname(){
         Board b = new Board();
-        b.movePlayer();
-        int playerPosition = b.movePlayer();
+        Player p = new Player("James");
+        int dice = p.rolledFigure(b);
+        p.movePlayer(dice,b);
+        int playerPosition = p.movePlayer(dice,b);
         if (playerPosition == position){
             return "You have reached the " + name + " property. It costs $" + price + ".";
         }
-        return name + "positon";
+        return "You have reached the " + name + " property. It costs $" + price + ".";
     }
 }
 

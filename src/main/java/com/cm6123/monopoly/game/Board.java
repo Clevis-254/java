@@ -24,7 +24,7 @@ public class Board {
     /**
      * Variable contains the value of the rolled dice.
      */
-    private int position;
+    private final int position;
     /**
      * contains the dice figures.
      */
@@ -58,19 +58,5 @@ public class Board {
         dice = roll1 + roll2;
         return dice;
     }
-    /**
-     * Creating a method that moves the player around the board.
-     * @return position returns the position of the player.
-     */
-    public int movePlayer() {
-        int newPosition = position + dice;
-        if (newPosition >= size) {
-            newPosition = newPosition % size;
-        }
-        for (int i = position; i <= newPosition; i++) {
-            spaces[i] = 'X';
-        }
-        position = newPosition;
-        return position;
-    }
+
 }

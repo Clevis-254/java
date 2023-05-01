@@ -23,14 +23,28 @@ public class Facility {
         this.position = aposition;
     }
     /**
+     * @returns the position of the facility.
+     */
+    public int  getPosition(){
+        return position;
+    }
+    /**
+     * @return name returns the name of facility.
+     */
+    public String getName(){
+        return name;
+    }
+    /**
      * @return the name and position  of the facility
      * method that returns the name and position of facility if the player moves towards it.
      */
 
     public String facilityName(){
         Board b = new Board();
-        b.movePlayer();
-        if(b.movePlayer()== position){
+        Player p = new Player("Annet");
+        int dice = p.rolledFigure(b);
+        p.movePlayer(dice,b);
+        if(p.movePlayer(dice,b)== position){
             return name ;
         }
         return  name ;
