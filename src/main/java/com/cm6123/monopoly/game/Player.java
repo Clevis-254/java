@@ -83,27 +83,33 @@ public class Player {
      * @param properties represent the array list that has all the properties.
      * @param newPosition represent the newposition
      */
-    public void displayProperties(final ArrayList<Property> properties,final int newPosition){
+    public String displayProperties(final ArrayList<Property> properties,final int newPosition){
         // Check if the player has landed on a property
+        String propertyname = null;
         for (Property p : properties) {
             if (newPosition == p.getPosition()) {
-                 System.out.println("You have landed on the " + p.getName());
+                propertyname = p.getName();
+                 System.out.println("You have landed on" + p.getName());
             }
         }
+
+        return propertyname;
     }
     /**
      * method that returns facility if found by the user.
      *
      */
 
-    public void displayFacilities(final ArrayList<Facility> facilities,final int newPosition){
+    public String displayFacilities(final ArrayList<Facility> facilities,final int newPosition) {
         // checks if the player has landed on facility
-        for (Facility f : facilities){
-            if(newPosition == f.getPosition()){
+        String facilityname = null;
+        for (Facility f : facilities) {
+            if (newPosition == f.getPosition()) {
+                facilityname = f.getName();
                 System.out.println("You have landed on the " + f.getName());
             }
         }
-
+        return facilityname;
     }
     public static void addPlayers(final ArrayList<Player> players) {
         String[] names = {"james","Jane","Paul"};

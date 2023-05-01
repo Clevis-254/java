@@ -6,7 +6,7 @@ public class Board {
     /**
      * Assigning the board size number.
      */
-    private static final int DEFAULT_BOARD_SIZE = 6;
+    private static final int DEFAULT_BOARD_SIZE = 40;
 
     /**
      * Assigning the number of faces.

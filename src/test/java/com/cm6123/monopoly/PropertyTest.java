@@ -7,6 +7,8 @@ import com.cm6123.monopoly.game.Property;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+
+import static com.cm6123.monopoly.game.Property.addProperty;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +17,7 @@ public class PropertyTest {
     @Test
     public void testproperty (){
         ArrayList<Property> properties = new ArrayList<>();
-        Property.addProperty(properties);
+        addProperty(properties);
         assertTrue(properties.size()==3);
 
     }
@@ -50,6 +52,22 @@ public class PropertyTest {
             w.getPrice();
         }
 
+    }
+
+    @Test
+    public void addPropertyTest() {
+        ArrayList<Property> properties = new ArrayList<>();
+        addProperty(properties);
+        assertEquals(3, properties.size());
+        assertEquals("mall", properties.get(0).getName());
+        assertEquals(700, properties.get(0).getPrice());
+        assertEquals(3, properties.get(0).getPosition());
+        assertEquals("market", properties.get(1).getName());
+        assertEquals(800, properties.get(1).getPrice());
+        assertEquals(2, properties.get(1).getPosition());
+        assertEquals("bus", properties.get(2).getName());
+        assertEquals(600, properties.get(2).getPrice());
+        assertEquals(1, properties.get(2).getPosition());
     }
 
 }
