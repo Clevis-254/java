@@ -45,11 +45,8 @@ public class addProrperty {
             assertEquals(expected, actual);
             w.getName();
             w.getPrice();
-        } else {
-            String expected = null;
-            String actual = null;
-            assertEquals(expected, actual);
         }
+
     }
 
 }

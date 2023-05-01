@@ -23,8 +23,8 @@ public class BoardTest {
         if (expectedPosition > b.getSize()) {
             expectedPosition = expectedPosition % b.getSize();
         }
-
         assertEquals(expectedPosition, newPosition, "Expected position: " + expectedPosition + ", Actual position: " + newPosition);
+
         // Scenario 2: New position is greater than the size of the board
         int diceRoll2 = b.rollDice();
         int oldPosition2 = b.movePlayer();

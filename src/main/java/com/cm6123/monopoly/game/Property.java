@@ -51,14 +51,17 @@ public class Property {
      * @param properties represents the properties name.
      */
 
-    public static void addProperty(ArrayList<Property> properties){
-        Property mall = new Property("mall",700,3);
-        Property market = new Property("market",800,2);
-        Property bus = new Property("bus",600,1);
-        properties.add(mall);
-        properties.add(market);
-        properties.add(bus);
+    public static void addProperty(final ArrayList<Property> properties) {
+        String[] names = {"mall", "market", "bus"};
+        int[] prices = {700, 800, 600};
+        int[] positions = {3, 2, 1};
+
+        for (int i = 0; i < names.length; i++) { // use for loop to enter the date into the respective places in the board.
+            Property property = new Property(names[i], prices[i], positions[i]);
+            properties.add(property);
+        }
     }
+
 
     /**
      * returns the name of the property when the move is at the property.
@@ -69,10 +72,10 @@ public class Property {
         Board b = new Board();
         b.movePlayer();
         int playerPosition = b.movePlayer();
-        if (playerPosition == position ){
+        if (playerPosition == position){
             return "You have reached the " + name + " property. It costs $" + price + ".";
         }
-        return name;
+        return name + "positon";
     }
 }
 
