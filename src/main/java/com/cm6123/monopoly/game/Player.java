@@ -10,15 +10,19 @@ public class Player {
     /**
      * contains the current position of the player.
      */
-    private final Integer position;
+    private Integer position;
+    /**
+     * contains the balance of the player.
+     */
+    private Integer balance;
     /**
      * player constructor.
      * @param aname contains the name of the player.
      */
-
     public Player(final String aname){
         this.name = aname;
         this.position = 1;
+        this.balance = 1000;
     }
     /**
      * method that returns player position.
@@ -74,8 +78,10 @@ public class Player {
         int newPosition = position + dice;
         if (newPosition >= size) {
             newPosition = newPosition % size;
+            balance += 200;
         }
-        return newPosition;
+        position = newPosition;
+        return position;
     }
 
     /**
@@ -118,6 +124,14 @@ public class Player {
             Player p = new Player(names[i]);
             players.add(p);
         }
+    }
+
+    /**
+     * calculates the balance.
+     * @return returns balance.
+     */
+    public Integer getBalance(){
+        return balance;
     }
 
 }

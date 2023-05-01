@@ -72,5 +72,15 @@ public class PlayerTest {
 
     }
 
+    @Test
+    public void testBalance(){
+        Board b = new Board();
+        Player p = new Player("Henry");
+        p.movePlayer(10,b);
+        assertEquals(11,p.getPosition());
+        p.movePlayer(6,b);
+        assertEquals(2,p.getPosition());
+        assertEquals(1200,p.getBalance());
+    }
 }
 
