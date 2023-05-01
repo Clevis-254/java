@@ -44,9 +44,7 @@ public class Facility {
         Player p = new Player("Annet");
         int dice = p.rolledFigure(b);
         p.movePlayer(dice,b);
-        if(p.movePlayer(dice,b)== position){
-            return name ;
-        }
+        p.movePlayer(dice, b);
         return  name ;
     }
 

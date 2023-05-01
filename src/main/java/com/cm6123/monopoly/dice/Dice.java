@@ -5,10 +5,10 @@ public class Dice {
   /**
    * The number of faces on this dice.
    */
-  private Integer faces;
+  private final Integer faces;
 
   /**
-   * Construct a dice with the given number of faces.
+   * Construct a die with the given number of faces.
    *
    * @param numberOfFaces the number of faces that the dice will have.  Dice rolls 1 to this number.
    */

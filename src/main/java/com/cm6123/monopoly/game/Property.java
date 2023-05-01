@@ -81,9 +81,6 @@ public class Property {
         int dice = p.rolledFigure(b);
         p.movePlayer(dice,b);
         int playerPosition = p.movePlayer(dice,b);
-        if (playerPosition == position){
-            return "You have reached the " + name + " property. It costs $" + price + ".";
-        }
         return "You have reached the " + name + " property. It costs $" + price + ".";
     }
 }
