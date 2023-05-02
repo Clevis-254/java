@@ -165,6 +165,16 @@ public class Player {
         return owner;
     }
 
+    /**
+     * method that prompts the user to pay rent if their exists an owner.
+     * @param property is the name of property.
+     */
+    public void payRent(final Property property){
+        if (property.getOwner() != null){
+            balance -= property.getRent();
+            logger.info(name +"has paid rent to "+ property.getOwner() + "of"+ property.getName());
+        }
+    }
 
 }
 

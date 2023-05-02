@@ -18,7 +18,7 @@ public class PlayerTest {
     public void testPlayer () {
         ArrayList<Player> players = new ArrayList<>();
         Player.addPlayers(players);
-        assertTrue(players.size() == 3);
+        assertEquals(3,players.size());
     }
 
     @Test
@@ -102,6 +102,15 @@ public class PlayerTest {
         assertEquals("John",d.getOwner());
      }
 
+     @Test
+    public void testPayRent(){
+         Property d = new Property("bus", 800, 1);
+         Player j = new Player("James");
+         j.purchaseProperty(d);
+        Player w = new Player("White");
+        w.payRent(d);
+        assertEquals(920,w.getBalance());
+     }
 
 }
 

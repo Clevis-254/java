@@ -21,6 +21,10 @@ public class Property {
      */
     private final  Integer position;
     /**
+     * the rent of the property.
+     */
+    private final Integer rent;
+    /**
      * propert constructor.
      * @param aname  has the name of the property.
      * @param aprice has the price of the property.
@@ -31,6 +35,7 @@ public class Property {
         this.price = aprice;
         this.position = aposition;
         this.owner = null;
+        this.rent = 10 * price / 100;
     }
     /**
      * method that returns property name.
@@ -57,6 +62,12 @@ public class Property {
 
     public Integer getPosition(){
         return position;
+    }
+    /**
+     * @return rent  returns the rent of a particular property.
+     */
+    public Integer getRent(){
+        return rent;
     }
     /**
      * enters properties into the board.

@@ -18,13 +18,13 @@ public class PropertyTest {
     public void testproperty (){
         ArrayList<Property> properties = new ArrayList<>();
         addProperty(properties);
-        assertTrue(properties.size()==3);
+        assertEquals(3,properties.size());
 
     }
 
     @Test
     public void
-    propertyname(){
+    testPropertyname(){
         Player p = new Player("John");
         Board b = new Board();
         int dice = p.rolledFigure(b);
@@ -70,5 +70,11 @@ public class PropertyTest {
         assertEquals(1, properties.get(2).getPosition());
     }
 
+    @Test
+    public void testRent(){
+        Property d = new Property("bus",600,1);
+        d.getRent();
+        assertEquals(60,d.getRent());
+    }
 }
 
