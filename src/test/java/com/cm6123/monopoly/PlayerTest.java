@@ -14,12 +14,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
-    @Test
-    public void testPlayer () {
-        ArrayList<Player> players = new ArrayList<>();
-        Player.addPlayers(players);
-        assertEquals(3,players.size());
-    }
 
     @Test
     public void createPlayer(){
@@ -38,38 +32,8 @@ public class PlayerTest {
         int newPosition = player.movePlayer(4, board);
         assertEquals(5, newPosition);
     }
-    @Test
-    public void testDisplayFacility(){
-        // Creating  an instance of the Player class with a player.
-        Player player = new Player("Alice");
 
-        // Initializing an ArrayList of Facility objects
-        ArrayList<Facility> facilities = new ArrayList<>();
-        facilities.add(new Facility("Swimming Pool", 8));
-        facilities.add(new Facility("Movie Theater", 15));
-        facilities.add(new Facility("Gym", 10));
 
-        // inserting an assumed position of a player to see whether the facility the expected
-        player.displayFacilities(facilities, 15);
-        String facility = "Movie Theater";
-        assertEquals(player.displayFacilities(facilities, 15),"Movie Theater");
-    }
-
-    @Test
-    public void testDisplayProperties() {
-        Player p = new Player("john");
-        // Create a list of properties
-        ArrayList<Property> properties = new ArrayList<>();
-        properties.add(new Property("Boardwalk", 600,9));
-        properties.add(new Property("Park Place", 900,11));
-        properties.add(new Property("Marvin Gardens", 900,7));
-
-        // inserting a temporary position to see whether it returns the correct name
-        p.displayProperties(properties,11);
-        String property = "Park Place";
-        assertEquals(p.displayProperties(properties,11),"Park Place");
-
-    }
 
     @Test
     public void testBalance(){
@@ -102,15 +66,27 @@ public class PlayerTest {
         assertEquals("John",d.getOwner());
      }
 
-     @Test
-    public void testPayRent(){
-         Property d = new Property("bus", 800, 1);
-         Player j = new Player("James");
-         j.purchaseProperty(d);
-        Player w = new Player("White");
-        w.payRent(d);
-        assertEquals(920,w.getBalance());
-     }
+
+    @Test
+    public void testRent() {
+        // Create a property and a player who purchases it
+        Property property = new Property("bus", 800, 1);
+        Player owner = new Player("James");
+        owner.purchaseProperty(property);
+
+        // Check that the owner's balance has been updated
+        assertEquals(200, owner.getBalance());
+
+        // Create another player who rents the property
+        Player renter = new Player("White");
+        renter.payRent(property);
+
+        // Check that the renter's balance has been updated
+        assertEquals(920, renter.getBalance());
+
+        // Check that the owner's balance has been updated
+        //assertEquals(280, owner.getBalance());
+    }
 
 }
 

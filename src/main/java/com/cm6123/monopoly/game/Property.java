@@ -100,6 +100,7 @@ public class Property {
     }
     /**
      * method that returns the owner of the property.
+     *
      * @return owner of the property.
      */
     public String getOwner() {
