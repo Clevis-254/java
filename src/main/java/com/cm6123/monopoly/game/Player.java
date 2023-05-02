@@ -2,6 +2,9 @@ package com.cm6123.monopoly.game;
 
 import java.util.ArrayList;
 
+import static com.cm6123.monopoly.app.Application.logger;
+
+
 public class Player {
     /**
      * String that contains player names.
@@ -88,6 +91,7 @@ public class Player {
      * method that returns the name of the property one is.
      * @param properties represent the array list that has all the properties.
      * @param newPosition represent the newposition
+     * @return propertyname returns the name of the property.
      */
     public String displayProperties(final ArrayList<Property> properties,final int newPosition){
         // Check if the player has landed on a property
@@ -103,7 +107,9 @@ public class Player {
     }
     /**
      * method that returns facility if found by the user.
-     *
+     * @return should return the facility name.
+     * @param newPosition is the new position of the player.
+     * @param facilities  is the array of the facilities available.
      */
 
     public String displayFacilities(final ArrayList<Facility> facilities,final int newPosition) {
@@ -117,6 +123,11 @@ public class Player {
         }
         return facilityname;
     }
+
+    /**
+     * adds the players in list form.
+     * @param players is the array of players being added.
+     */
     public static void addPlayers(final ArrayList<Player> players) {
         String[] names = {"james","Jane","Paul"};
 
@@ -133,6 +144,27 @@ public class Player {
     public Integer getBalance(){
         return balance;
     }
+    /**
+     * creating method that enables player to purchase.
+     * @param property  is the class property.
+     * @return returns the owner of the property.
+     */
+    public String purchaseProperty(final Property property) {
+        String owner = property.getOwner();
+        if (property.getOwner() == null && balance > property.getPrice()) {
+            balance -= property.getPrice();
+            String newOwner = property.setOwner(name);
+            owner = newOwner;
+            logger.info(name + " has purchased " + property.getName() + " for " + property.getPrice());
+        } else if (property.getOwner() == null && balance < property.getPrice()) {
+            System.out.println("Not enough balance available");
+        } else {
+            System.out.println("Property is owned" + owner);
+        }
+
+        return owner;
+    }
+
 
 }
 

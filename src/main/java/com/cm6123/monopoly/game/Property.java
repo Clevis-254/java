@@ -9,6 +9,10 @@ public class Property {
      */
     private final  String name;
     /**
+     * owner of the property.
+     */
+    private String owner;
+    /**
      * the price of the property.
      */
     private final Integer price;
@@ -26,6 +30,7 @@ public class Property {
         this.name = aname;
         this.price = aprice;
         this.position = aposition;
+        this.owner = null;
     }
     /**
      * method that returns property name.
@@ -72,7 +77,6 @@ public class Property {
 
     /**
      * returns the name of the property when the move is at the property.
-     *
      * @return name is the name of the property.
      */
     public String propertyname(){
@@ -82,6 +86,24 @@ public class Property {
         p.movePlayer(dice,b);
         int playerPosition = p.movePlayer(dice,b);
         return "You have reached the " + name + " property. It costs $" + price + ".";
+    }
+    /**
+     * method that returns the owner of the property.
+     * @return owner of the property.
+     */
+    public String getOwner() {
+        return owner;
+    }
+
+    /**
+     * method that sets the owner of the property.
+     *
+     * @param aowner the name of the player who bought the property.
+     * @return new owner.
+     */
+    public String setOwner(final String aowner) {
+        this.owner = aowner;
+        return aowner;
     }
 }
 

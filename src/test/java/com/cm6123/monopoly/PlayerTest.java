@@ -10,8 +10,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
 
@@ -82,5 +81,27 @@ public class PlayerTest {
         assertEquals(2,p.getPosition());
         assertEquals(1200,p.getBalance());
     }
+
+    @Test
+    public void testPurchaseProperty() {
+        Player p= new Player("John");
+        Property d = new Property("bus", 800, 1);
+        Property m = new Property("market", 1200, 2);
+        Property w = new Property("mall", 700, 3);
+        p.purchaseProperty(d);
+        assertEquals("John", d.getOwner());
+        assertEquals(200, p.getBalance());
+
+        Player a = new Player("Derrick");
+        a.purchaseProperty(m);
+        assertNull(null,m.getOwner());
+        assertEquals(1000,a.getBalance());
+
+        Player t = new Player("sharon");
+        t.purchaseProperty(d);
+        assertEquals("John",d.getOwner());
+     }
+
+
 }
 
