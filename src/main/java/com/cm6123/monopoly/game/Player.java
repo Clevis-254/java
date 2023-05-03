@@ -2,6 +2,8 @@ package com.cm6123.monopoly.game;
 
 
 
+import java.util.Scanner;
+
 import static com.cm6123.monopoly.app.Application.logger;
 
 
@@ -52,21 +54,31 @@ public class Player {
 
     /**
      * creating a method that creates an array based on the number of players entered.
-     *
-     * @param numPlayers  contains the number of players.
-     * @param playerNames contains the name of players.
      * @return players returns the name of the players.
      */
 
-    public static Player[] createPlayers(final int numPlayers, final String[] playerNames) {
-        Player[] players = new Player[numPlayers];
+    public static Player[] createPlayersFromInput() {
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter number of players: ");
+        int player = s.nextInt();
+        while (player < 2 || player > 10) {
+            System.out.println("Number of players must be between 2 and 10. Please enter again:");
+            player = s.nextInt();
+        }
+        s.nextLine(); // consume the newline character
 
-        for (int i = 0; i < numPlayers; i++) {
-            players[i] = new Player(playerNames[i]);
+        Player[] players = new Player[player];
+
+        for (int i = 0; i < player; i++) {
+            System.out.print("Enter name for player " + (i+1) + ": ");
+            String name = s.nextLine();
+            players[i] = new Player(name);
         }
 
         return players;
     }
+
+
 
     /**
      * creating a method that rolles the dice of the player around.
@@ -129,6 +141,7 @@ public class Player {
      * @param property is the name of property.
      */
     public void payRent(final Property property) {
+
         if (property.getOwner() != null) {
             int rent = property.getRent();
             balance -= rent;
@@ -146,6 +159,23 @@ public class Player {
      * @return returns balance.
      */
     public Integer getBalance() {
+        return balance;
+    }
+
+    /**
+     * calculates the taxes.
+     * @param facility is the facility name.
+     * @param aposition is the positon of the player.
+     * @return returns the balance.
+     */
+    public int payTax(final Facility facility, final int aposition) {
+        if (facility.getPosition() == position){
+            if (facility.getName().equals("Tax office")){
+                int taxPercent = 10; // set tax percent based on rolledDouble flag
+                int taxAmount = (int) (balance * (taxPercent / 100.0));
+                balance = balance - taxAmount;
+            }
+        }
         return balance;
     }
 

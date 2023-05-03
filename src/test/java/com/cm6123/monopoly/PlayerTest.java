@@ -15,15 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class PlayerTest {
 
 
-    @Test
-    public void createPlayer(){
-        String[] playerNames = {"Alice", "Bob", "Charlie"};
-        Player[] players = Player.createPlayers(3, playerNames);
-        assertEquals(3, players.length);
-        assertEquals("Alice", players[0].getName());
-        assertEquals("Bob", players[1].getName());
-        assertEquals("Charlie", players[2].getName());
-    }
+
 
     @Test
     public void testMovePlayer() {
@@ -86,6 +78,19 @@ public class PlayerTest {
 
         // Check that the owner's balance has been updated
         //assertEquals(280, owner.getBalance());
+    }
+
+    @Test
+    public void testTax(){
+        Board b = new Board();
+        Player p = new Player("James");
+        p.movePlayer(5,b);
+        Facility f = new Facility("Tax office",6);
+        p.payTax(f,6);
+
+        int expected = 900;
+        int actual = p.getBalance();
+        assertEquals(expected,actual);
     }
 
 }

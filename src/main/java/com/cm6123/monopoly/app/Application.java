@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.cm6123.monopoly.game.Player.createPlayersFromInput;
+
 public final class Application {
     /**
      * Create a logger for the class.
@@ -44,10 +46,8 @@ public final class Application {
             System.out.println("Player " + (i + 1) + " is " + names[i]); // display the name of the players and their number.
         }
 
-        Player[] aplayers = Player.createPlayers(this.players, this.names);
-        for (int i = 0; i < aplayers.length; i++) {
-            logger.info (aplayers[i].getName() + " has been added to the game."); // displays the name of the player in the system.
-        }
+        Player[] players = createPlayersFromInput();
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.cm6123.monopoly.game;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Facility {
 
@@ -12,56 +13,74 @@ public class Facility {
      * contains the name of the facilities.
      */
 
-    private  final Integer position;
+    private final Integer position;
+
     /**
      * constructor of the facilities class.
-     * @param aname contains the name of the facility either name, railway, tax office.
+     *
+     * @param aname     contains the name of the facility either name, railway, tax office.
      * @param aposition contains the position of the facilities.
      */
-    public Facility(final String aname, final Integer aposition){
+    public Facility(final String aname, final Integer aposition) {
         this.name = aname;
         this.position = aposition;
     }
+
     /**
      * @returns the position of the facility.
      */
-    public int  getPosition(){
+    public int getPosition() {
         return position;
     }
+
     /**
      * @return name returns the name of facility.
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
+
     /**
+     * @param facilities     contains the facilities name.
+     * @param playerPosition contains the players postion.
      * @return the name and position  of the facility
      * method that returns the name and position of facility if the player moves towards it.
      */
 
-    public String facilityName(){
-        Board b = new Board();
-        Player p = new Player("Annet");
-        int dice = p.rolledFigure(b);
-        p.movePlayer(dice,b);
-        p.movePlayer(dice, b);
-        return  name ;
+    public static String facilityName(int playerPosition, ArrayList<Facility> facilities) {
+        for (Facility f : facilities) {
+            if (f.getPosition() == playerPosition) {
+                return f.getName();
+            }
+        }
+        return null; // return null if the player is not on any facility
     }
+
 
     /**
      * enters facilities into the board.
+     *
      * @param facilities represents the properties name.
      */
 
-    public static void addFacilities(final ArrayList<Facility> facilities) {
-        String[] names = {"road", "tax-office", "railway"};
-        int[] positions = {4, 5, 6};
+    public static void addFacilities(ArrayList<Facility> facilities) {
+        Scanner scanner = new Scanner(System.in);
 
-        for (int i = 0; i < names.length; i++) {
-            Facility f = new Facility(names[i], positions[i]);
-            facilities.add(f);
+        while (true) {
+            System.out.print("Enter facility name (or 'done' to finish adding facilities): ");
+            String name = scanner.nextLine();
+            if (name.equalsIgnoreCase("done")) {
+                break;
+            }
+
+            System.out.print("Enter facility position: ");
+            int position = scanner.nextInt();
+            scanner.nextLine();
+
+            Facility facility = new Facility(name, position);
+            facilities.add(facility);
         }
+
+
     }
-
-
 }

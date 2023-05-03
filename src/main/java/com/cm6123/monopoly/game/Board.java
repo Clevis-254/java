@@ -56,7 +56,16 @@ public class Board {
         int roll1 = n.roll();
         int roll2 = n.roll();
         dice = roll1 + roll2;
+
+        boolean rolledDouble;
+        if (roll1 == roll2) {
+            rolledDouble = true;
+        } else {
+            rolledDouble = false;
+        }
+
         return dice;
     }
+
 
 }
