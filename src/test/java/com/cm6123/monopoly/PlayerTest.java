@@ -92,6 +92,17 @@ public class PlayerTest {
         int actual = p.getBalance();
         assertEquals(expected,actual);
     }
+    @Test
+    public void testFare(){
+        Facility f = new Facility("Station",8);
+        Player p = new Player("John");
+        Board b = new Board();
+        p.movePlayer(7,b);
+        p.payFare(f,p,7);
+        int expected = 930;
+        int actual = p.getBalance();
+        assertEquals(expected,actual);
+    }
 
 }
 

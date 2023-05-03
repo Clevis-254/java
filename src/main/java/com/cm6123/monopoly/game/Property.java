@@ -88,16 +88,13 @@ public class Property {
 
     /**
      * returns the name of the property when the move is at the property.
+     * @param property  contains the name of property.
      * @return name is the name of the property.
      */
-    public String propertyname(){
-        Board b = new Board();
-        Player p = new Player("James");
-        int dice = p.rolledFigure(b);
-        p.movePlayer(dice,b);
-        int playerPosition = p.movePlayer(dice,b);
-        return "You have reached the " + name + " property. It costs $" + price + ".";
+    public String propertyname(Property property){
+        return "You have reached the " + property.getName() + "It costs" + property.getPrice() + ".";
     }
+
     /**
      * method that returns the owner of the property.
      *

@@ -54,6 +54,7 @@ public class Player {
 
     /**
      * creating a method that creates an array based on the number of players entered.
+     *
      * @return players returns the name of the players.
      */
 
@@ -70,14 +71,13 @@ public class Player {
         Player[] players = new Player[player];
 
         for (int i = 0; i < player; i++) {
-            System.out.print("Enter name for player " + (i+1) + ": ");
+            System.out.print("Enter name for player " + (i + 1) + ": ");
             String name = s.nextLine();
             players[i] = new Player(name);
         }
 
         return players;
     }
-
 
 
     /**
@@ -103,8 +103,8 @@ public class Player {
         int size = board.getSize();
         int newPosition = position + dice;
         if (newPosition >= size) {
-            newPosition = newPosition % size;
-            balance += 200;
+            newPosition = newPosition % size; // checks whether the new positon is greater than the number of spaces.
+            balance += 200; // if so it adds 200 to the balance.
         }
         position = newPosition;
         return position;
@@ -119,20 +119,19 @@ public class Player {
      */
     public String purchaseProperty(final Property property) {
         String owner = property.getOwner();
-        if (property.getOwner() == null && balance > property.getPrice()) {
-            balance -= property.getPrice();
-            String newOwner = property.setOwner(name);
-            owner = newOwner;
-            logger.info(name + " has purchased " + property.getName() + " for " + property.getPrice());
-        } else if (property.getOwner() == null && balance < property.getPrice()) {
-            System.out.println("Not enough balance available");
+        if (owner == null) { // checks if the property has an owner.
+            if (balance < property.getPrice()) { // checks if the buyer has enough money to buy the property.
+                System.out.println("Not enough balance available");
+            } else {
+                balance -= property.getPrice();
+                owner = property.setOwner(name);
+                logger.info(name + " has purchased " + property.getName() + " for " + property.getPrice());
+            }
         } else {
-            System.out.println("Property is owned by" + owner);
+            System.out.println("Property is owned by " + owner);
         }
-
         return owner;
     }
-
 
 
     /**
@@ -142,12 +141,12 @@ public class Player {
      */
     public void payRent(final Property property) {
 
-        if (property.getOwner() != null) {
+        if (property.getOwner() != null) { // checks if their exists an owner.
             int rent = property.getRent();
-            balance -= rent;
+            balance -= rent; // user pays rent.
             String player = property.getOwner();
             Player owner = new Player(property.getOwner());
-            owner.balance += rent ;
+            owner.balance += rent;
             logger.info(name + " has paid rent of " + rent + " to " + owner.getName() + " for " + property.getName());
         }
     }
@@ -164,13 +163,14 @@ public class Player {
 
     /**
      * calculates the taxes.
-     * @param facility is the facility name.
+     *
+     * @param facility  is the facility name.
      * @param aposition is the positon of the player.
      * @return returns the balance.
      */
     public int payTax(final Facility facility, final int aposition) {
-        if (facility.getPosition() == position){
-            if (facility.getName().equals("Tax office")){
+        if (facility.getPosition() == position) {
+            if (facility.getName().equals("Tax office")) {
                 int taxPercent = 10; // set tax percent based on rolledDouble flag
                 int taxAmount = (int) (balance * (taxPercent / 100.0));
                 balance = balance - taxAmount;
@@ -179,6 +179,27 @@ public class Player {
         return balance;
     }
 
+    /**
+     * calculates the fare of the player if the arrival is at railway station.
+     * @return balance returns the balance after fare has been deducted.
+     * @param player  is the player.
+     * @param facility  is the facility.
+     * @param dice  is the dice value.
+     */
+
+    public Integer payFare(final Facility facility, final Player player,final Integer  dice) {
+        String aname = facility.getName();
+        Board b = new Board();
+        int rolled = dice;
+        int fare = (rolled * 10);
+        if (facility.getPosition() == position) {
+            if (aname.equals("Station")) { // checks if the name is station.
+                balance -= fare; // subtracts balance from the user.
+            }
+        }
+
+        return  balance;
+    }
 }
 
 

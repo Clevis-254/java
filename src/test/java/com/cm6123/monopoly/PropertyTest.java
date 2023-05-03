@@ -34,22 +34,16 @@ public class PropertyTest {
 
         if (p.movePlayer(dice,b) == 1){
             String expected ="You have reached the bus property. It costs $600.";
-            String actual =d.propertyname();
+            String actual =d.propertyname(d);
             assertEquals(expected, actual);
-            d.getName();
-            d.getPrice();
         } else if (p.movePlayer(dice,b) == 2) {
             String expected = "You have reached the market property. It costs $800.";
-            String actual = m.propertyname();
+            String actual = m.propertyname(m);
             assertEquals(expected, actual);
-            m.getName();
-            m.getPrice();
         } else if(p.movePlayer(dice,b) == 3){
             String expected ="You have reached the mall property. It costs $700.";
-            String actual = w.propertyname();
+            String actual = w.propertyname(w);
             assertEquals(expected, actual);
-            w.getName();
-            w.getPrice();
         }
 
     }
@@ -76,5 +70,6 @@ public class PropertyTest {
         d.getRent();
         assertEquals(60,d.getRent());
     }
+
 }
 
