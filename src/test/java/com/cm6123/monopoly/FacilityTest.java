@@ -4,6 +4,7 @@ import com.cm6123.monopoly.game.Board;
 import com.cm6123.monopoly.game.Facility;
 
 import com.cm6123.monopoly.game.Player;
+import com.cm6123.monopoly.game.Property;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -11,29 +12,37 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import static com.cm6123.monopoly.game.Facility.addFacilities;
+import static com.cm6123.monopoly.game.Property.addProperty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FacilityTest {
 
     @Test
-    public void testAddFacility(){
-
-        ArrayList<Facility> facilities = new ArrayList<Facility>();
-
-
-        String input = "Tax-office\n1\nRoad\n2\ndone\n";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-
+    public void testfacility (){
+        ArrayList<Facility> facilities = new ArrayList<>();
         addFacilities(facilities);
+        assertEquals(3,facilities.size());
+
+    }
+
+    @Test
+    public void testAddFacilities() {
+        ArrayList<Facility> facilities = new ArrayList<>();
+        Facility.addFacilities(facilities);
+
+        // Check that the size of the list is 3
+        assertEquals(3, facilities.size());
 
         // Check that the facilities were added correctly
-        assertEquals("Tax-office", facilities.get(0).getName());
-        assertEquals(1, facilities.get(0).getPosition());
-        assertEquals("Road", facilities.get(1).getName());
-        assertEquals(2, facilities.get(1).getPosition());
+        assertEquals("Road", facilities.get(0).getName());
+        assertEquals(2, facilities.get(0).getPosition());
+
+        assertEquals("Station", facilities.get(1).getName());
+        assertEquals(5, facilities.get(1).getPosition());
+
+        assertEquals("Tax-office", facilities.get(2).getName());
+        assertEquals(6, facilities.get(2).getPosition());
     }
 
 
@@ -63,8 +72,6 @@ public class FacilityTest {
         }
 
     }
-
-
 
         @Test
         public void testFacilityName() {

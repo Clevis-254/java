@@ -1,6 +1,7 @@
 package com.cm6123.monopoly.app;
 
 
+import com.cm6123.monopoly.game.Board;
 import com.cm6123.monopoly.game.Facility;
 import com.cm6123.monopoly.game.Player;
 import com.cm6123.monopoly.game.Property;
@@ -10,13 +11,16 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.cm6123.monopoly.game.Facility.displayFacilities;
 import static com.cm6123.monopoly.game.Player.createPlayersFromInput;
+import static com.cm6123.monopoly.game.Property.addProperty;
+import static com.cm6123.monopoly.game.Property.displayProperties;
 
 public final class Application {
     /**
      * Create a logger for the class.
      */
-    public static final  Logger logger = LoggerFactory.getLogger(Application.class);
+    public static final Logger logger = LoggerFactory.getLogger(Application.class);
     /**
      * name shows the number of players playing the game.
      */
@@ -24,68 +28,91 @@ public final class Application {
 
 
     private Application() {
-
-
+        // Create players
         Player[] players = createPlayersFromInput();
 
+        // Create board, properties and facilities
+        Board board = new Board();
+        ArrayList<Property> properties = new ArrayList<>();
+        addProperty(properties);
+        ArrayList<Facility> facilities = new ArrayList<>();
+        Facility.addFacilities(facilities);
 
+        // Game loop
+        boolean gameOver = false;
+        int currentPlayerIndex = 0;
+
+        while (!gameOver) {
+            // Get current player
+            Player currentPlayer = players[currentPlayerIndex];
+
+            // Roll the dice
+            int diceRoll = currentPlayer.rolledFigure(board);
+            System.out.println(currentPlayer.getName() + " has rolled a " + diceRoll);
+
+            // Move the player
+            int position = currentPlayer.movePlayer(diceRoll, board);
+
+            // Display the location
+            // Display the location
+            Property currentProperty = displayProperties(properties, position);
+            Facility currentFacility = displayFacilities(facilities, position);
+            if (currentProperty != null) {
+                currentProperty.getName();
+                if(currentProperty.getOwner() != null){
+                    currentPlayer.payRent(currentProperty);
+                    int rent = currentProperty.getRent();
+                    Player owner = new Player(currentProperty.getOwner());
+                    owner.getRent(rent);
+                    System.out.println("You have paid a rent to the owner, your new balance is "+currentPlayer.getBalance());
+                } else if (currentProperty.getOwner()== null) {
+                    if(currentPlayer.getBalance()< currentProperty.getPrice()){
+                        System.out.println("Cannot purchase property as you have less balance");
+                    } else{
+                        Scanner s = new Scanner(System.in);
+                        System.out.println("Do you wish to purchase property? (yes/no)");
+                        String answer = s.nextLine();
+                        if (answer.equalsIgnoreCase("Yes")){
+                            currentPlayer.purchaseProperty(currentProperty);
+                        }
+                    }
+                }
+            }
+
+            if (currentFacility != null) {
+                currentFacility.getName();
+                if (currentFacility.getName() == "Tax-office") {
+                    currentPlayer.payTax();
+                    System.out.println("You have paid your taxes therefore your balance is" + currentPlayer.getBalance());
+                } else if (currentFacility.getName() == "Station") {
+                    currentPlayer.payFare(diceRoll);
+                    System.out.println("You have paid your fare therefore your balance is" + currentPlayer.getBalance());
+                }
+            }
+
+            // Check if game is over
+            // ...
+            System.out.println("\n" + players[(currentPlayerIndex + 1) % players.length].getName() + ", please enter 'roll' to roll the dice: ");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.nextLine();
+            if (input.equals("roll")) {
+                //  Move to the next player's turn
+                currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            }
+        }
     }
 
     /**
-     * Method that displays the name of the property where the player has landed on.
+     * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
+     * input.
      *
-     * @param properties   The list of properties in the game.
-     * @param newPosition  The new position of the player.
-     * @return             The name of the property where the player has landed on.
+     * @param args command line args.
      */
-    private String displayProperties(final ArrayList<Property> properties, final int newPosition) {
-        // Check if the player has landed on a property
-        String propertyName = null;
-        for (Property property : properties) {
-            if (newPosition == property.getPosition()) {
-                propertyName = property.getName();
-                System.out.println("You have landed on " + property.getName());
-            }
-        }
 
-        return propertyName;
+    public static void main(final String[] args) {
+        logger.info("Application Started with args:{}", String.join(",", args));
+        new Application();
+        System.out.println("Hello. Welcome to Monopoly.");
+        logger.info("Application closing");
     }
-
-    /**
-     * Method that displays the name of the facility where the player has landed on.
-     *
-     * @param facilities   The list of facilities in the game.
-     * @param newPosition  The new position of the player.
-     * @return             The name of the facility where the player has landed on.
-     */
-    private String displayFacilities(final ArrayList<Facility> facilities,final int newPosition) {
-        // Check if the player has landed on a facility
-        String facilityName = null;
-        for (Facility facility : facilities) {
-            if (newPosition == facility.getPosition()) {
-                facilityName = facility.getName();
-                System.out.println("You have landed on the " + facility.getName());
-            }
-        }
-
-        return facilityName;
-    }
-        /**
-         * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
-         * input.
-         *
-         * @param args command line args.
-         */
-        public static void main (final String[] args){
-
-
-            logger.info("Application Started with args:{}", String.join(",", args));
-
-            System.out.println("Hello. Welcome to Monopoly.");
-            Application a = new Application();
-            new Application();
-            logger.info("Application closing");
-        }
-
-    }
-
+}

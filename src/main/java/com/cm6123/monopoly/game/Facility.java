@@ -1,7 +1,7 @@
 package com.cm6123.monopoly.game;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+
 
 public class Facility {
 
@@ -27,13 +27,15 @@ public class Facility {
     }
 
     /**
-     * @returns the position of the facility.
+     * method that gets the facility position.
+     * @return the position of the facility.
      */
     public int getPosition() {
         return position;
     }
 
     /**
+     * method that returns facility name.
      * @return name returns the name of facility.
      */
     public String getName() {
@@ -47,7 +49,7 @@ public class Facility {
      * method that returns the name and position of facility if the player moves towards it.
      */
 
-    public static String facilityName(int playerPosition, ArrayList<Facility> facilities) {
+    public static String facilityName(final int playerPosition,final ArrayList<Facility> facilities) {
         for (Facility f : facilities) {
             if (f.getPosition() == playerPosition) {
                 return f.getName();
@@ -59,28 +61,35 @@ public class Facility {
 
     /**
      * enters facilities into the board.
-     *
      * @param facilities represents the properties name.
      */
 
-    public static void addFacilities(ArrayList<Facility> facilities) {
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.print("Enter facility name (or 'done' to finish adding facilities): ");
-            String name = scanner.nextLine();
-            if (name.equalsIgnoreCase("done")) {
-                break;
-            }
-
-            System.out.print("Enter facility position: ");
-            int position = scanner.nextInt();
-            scanner.nextLine();
-
-            Facility facility = new Facility(name, position);
+    public static void addFacilities(final ArrayList<Facility> facilities) {
+        String[] names = {"Road","Station","Tax-office"};
+        int [] positions = {2,5,6};
+        for (int i = 0; i < names.length; i++) { // use for loop to enter the date into the respective places in the board.
+            Facility facility = new Facility(names[i],positions[i]);
             facilities.add(facility);
         }
+    }
 
+    /**
+     * Method that displays the name of the facility where the player has landed on.
+     *
+     * @param facilities   The list of facilities in the game.
+     * @param newPosition  The new position of the player.
+     * @return The name of the facility where the player has landed on.
+     */
+    public static Facility displayFacilities(final ArrayList<Facility> facilities, final int newPosition) {
+        // Check if the player has landed on a facility
+        Facility facilitymatch = null;
+        for (Facility facility : facilities) {
+            if (newPosition == facility.getPosition()) {
+                facilitymatch = facility;
+                System.out.println("You have landed on the " + facility.getName());
+            }
+        }
 
+        return facilitymatch;
     }
 }

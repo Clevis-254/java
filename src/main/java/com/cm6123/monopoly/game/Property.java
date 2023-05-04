@@ -77,7 +77,7 @@ public class Property {
     public static void addProperty(final ArrayList<Property> properties) {
         String[] names = {"mall", "market", "bus"};
         int[] prices = {700, 800, 600};
-        int[] positions = {3, 2, 1};
+        int[] positions = {3, 7, 9};
 
         for (int i = 0; i < names.length; i++) { // use for loop to enter the date into the respective places in the board.
             Property property = new Property(names[i], prices[i], positions[i]);
@@ -91,8 +91,8 @@ public class Property {
      * @param property  contains the name of property.
      * @return name is the name of the property.
      */
-    public String propertyname(Property property){
-        return "You have reached the " + property.getName() + "It costs" + property.getPrice() + ".";
+    public String propertyname(final Property property){
+        return "You have reached the " + property.getName() + " property. It costs " + property.getPrice() + ".";
     }
 
     /**
@@ -106,7 +106,6 @@ public class Property {
 
     /**
      * method that sets the owner of the property.
-     *
      * @param aowner the name of the player who bought the property.
      * @return new owner.
      */
@@ -114,6 +113,25 @@ public class Property {
         this.owner = aowner;
         return aowner;
     }
+    /**
+     * Method that displays the name of the property where the player has landed on.
+     * @param properties  The list of properties in the game.
+     * @param newPosition The new position of the player.
+     * @return The name of the property where the player has landed on.
+     */
+    public static Property displayProperties(final ArrayList<Property> properties, final int newPosition) {
+        // Check if the player has landed on a property
+        Property propertyMatch = null;
+        for (Property property : properties) {
+            if (newPosition == property.getPosition()) {
+                propertyMatch = property;
+                System.out.println("You have landed on " + property.getName());
+            }
+        }
+
+        return propertyMatch;
+    }
+
 }
 
 
