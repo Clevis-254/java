@@ -98,18 +98,12 @@ public class PlayerTest {
     public void testHandleBankruptcy() {
         Player player = new Player("John");
         Player p = new Player ("James");
-        Player j = new Player("Janet");
         Property e = new Property("Property 1", 600, 1);
         Property Q = new  Property("Property 2", 700, 2);
         Property u = new Property("Property 3", 800, 3);
         player.add(e);
         p.add(Q);
         p.add(u);
-        // test case 1: player has no properties
-        j.setBalance(0);
-        j.handleBankruptcy(j,j.getPropertiesOwned());
-        assertEquals(0,j.countPropertyOwned());
-        assertEquals(0,j.getBalance());
 
         // test case 2: player has only one property
         player.setBalance(0);

@@ -59,20 +59,20 @@ public final class Application {
             Facility currentFacility = displayFacilities(facilities, position);
             if (currentProperty != null) {
                 currentProperty.getName();
-                if(currentProperty.getOwner() != null){
+                if (currentProperty.getOwner() != null) {
                     currentPlayer.payRent(currentProperty);
                     int rent = currentProperty.getRent();
                     Player owner = new Player(currentProperty.getOwner());
                     owner.getRent(rent);
-                    System.out.println("You have paid a rent to the owner, your new balance is "+currentPlayer.getBalance());
-                } else if (currentProperty.getOwner()== null) {
-                    if(currentPlayer.getBalance()< currentProperty.getPrice()){
+                    System.out.println("You have paid a rent to the owner, your new balance is " + currentPlayer.getBalance());
+                } else if (currentProperty.getOwner() == null) {
+                    if (currentPlayer.getBalance() < currentProperty.getPrice()) {
                         System.out.println("Cannot purchase property as you have less balance");
-                    } else{
+                    } else {
                         Scanner s = new Scanner(System.in);
                         System.out.println("Do you wish to purchase property? (yes/no)");
                         String answer = s.nextLine();
-                        if (answer.equalsIgnoreCase("Yes")){
+                        if (answer.equalsIgnoreCase("Yes")) {
                             currentPlayer.purchaseProperty(currentProperty);
                         }
                     }
@@ -90,8 +90,32 @@ public final class Application {
                 }
             }
 
+            // Handle bankruptcy
+            if (currentPlayer.getBalance()== 0 && currentPlayer.countPropertyOwned() == 0) {
+                // Remove player from the game
+                System.out.println(currentPlayer.getName() + " is out of the game.");
+                players[currentPlayerIndex] = null;
+            } else if ((currentPlayer.getBalance() ==  0 && currentPlayer.countPropertyOwned() >0)) {
+                currentPlayer.handleBankruptcy(currentPlayer,properties);
+            }
             // Check if game is over
-            // ...
+            int playersLeft = 0;
+            for (Player player : players) {
+                if (player != null) {
+                    playersLeft++;
+                }
+            }
+            if (playersLeft == 1) {
+                // Game is over, declare winner
+                for (Player player : players) {
+                    if (player != null) {
+                        System.out.println(player.getName() + " is the winner!");
+                        break;
+                    }
+                }
+                gameOver = true;
+            }
+
             System.out.println("\n" + players[(currentPlayerIndex + 1) % players.length].getName() + ", please enter 'roll' to roll the dice: ");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
@@ -105,7 +129,6 @@ public final class Application {
     /**
      * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
      * input.
-     *
      * @param args command line args.
      */
 

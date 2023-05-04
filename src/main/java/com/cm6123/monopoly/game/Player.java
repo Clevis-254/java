@@ -239,9 +239,7 @@ public class Player {
      * @param properties  is the properties of the bankrupt person.
      */
     public void handleBankruptcy(final Player player, final ArrayList<Property> properties) {
-        if (player.getBalance() == 0 && player.countPropertyOwned() == 0) {
-            logger.info(player.getName() + " is officially bankrupt");
-        } else if (player.getBalance() == 0 && player.countPropertyOwned() == 1) {
+         if (player.getBalance() == 0 && player.countPropertyOwned() == 1) {
             Property property = player.getPropertiesOwned().get(0);
             player.sellProperty(property);
         } else if (player.getBalance() == 0) {
