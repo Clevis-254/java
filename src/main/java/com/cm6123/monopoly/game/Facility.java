@@ -86,7 +86,6 @@ public class Facility {
         for (Facility facility : facilities) {
             if (newPosition == facility.getPosition()) {
                 facilitymatch = facility;
-                System.out.println("You have landed on the " + facility.getName());
             }
         }
 

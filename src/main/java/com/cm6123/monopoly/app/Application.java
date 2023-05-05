@@ -1,6 +1,4 @@
 package com.cm6123.monopoly.app;
-
-
 import com.cm6123.monopoly.game.Board;
 import com.cm6123.monopoly.game.Facility;
 import com.cm6123.monopoly.game.Player;
@@ -29,16 +27,24 @@ public final class Application {
 
     private Application() {
         // Create players
-        Player[] players = createPlayersFromInput();
+        Scanner s = new Scanner(System.in);
+        System.out.print("Enter the number of players playing: ");
+        int numPlayers = s.nextInt();
+        while (numPlayers < 2 || numPlayers > 10) {
+            System.out.println("Number of players must be between 2 and 10. Please enter again:");
+            numPlayers = s.nextInt();
+        }
+        s.nextLine(); // consume the newline character
+        Player[] players = createPlayersFromInput(numPlayers);
 
-        // Create board, properties and facilities
+// Create board, properties and facilities
         Board board = new Board();
         ArrayList<Property> properties = new ArrayList<>();
         addProperty(properties);
         ArrayList<Facility> facilities = new ArrayList<>();
         Facility.addFacilities(facilities);
 
-        // Game loop
+// Game loop
         boolean gameOver = false;
         int currentPlayerIndex = 0;
 
@@ -54,22 +60,21 @@ public final class Application {
             int position = currentPlayer.movePlayer(diceRoll, board);
 
             // Display the location
-            // Display the location
             Property currentProperty = displayProperties(properties, position);
             Facility currentFacility = displayFacilities(facilities, position);
+
             if (currentProperty != null) {
-                currentProperty.getName();
+                System.out.println("You have landed on "+currentProperty.getName());
                 if (currentProperty.getOwner() != null) {
                     currentPlayer.payRent(currentProperty);
                     int rent = currentProperty.getRent();
                     Player owner = new Player(currentProperty.getOwner());
                     owner.getRent(rent);
-                    System.out.println("You have paid a rent to the owner, your new balance is " + currentPlayer.getBalance());
+                    System.out.println(currentPlayer.getName()+" has paid rent to the property owner, new balance is " + currentPlayer.getBalance());
                 } else if (currentProperty.getOwner() == null) {
                     if (currentPlayer.getBalance() < currentProperty.getPrice()) {
                         System.out.println("Cannot purchase property as you have less balance");
                     } else {
-                        Scanner s = new Scanner(System.in);
                         System.out.println("Do you wish to purchase property? (yes/no)");
                         String answer = s.nextLine();
                         if (answer.equalsIgnoreCase("Yes")) {
@@ -81,23 +86,25 @@ public final class Application {
 
             if (currentFacility != null) {
                 currentFacility.getName();
-                if (currentFacility.getName() == "Tax-office") {
-                    currentPlayer.payTax();
-                    System.out.println("You have paid your taxes therefore your balance is" + currentPlayer.getBalance());
-                } else if (currentFacility.getName() == "Station") {
+                System.out.println(currentPlayer.getName() +" has landed on "+ currentFacility.getName());
+                if (currentFacility.getName().equals("Tax-office")) {
+                    currentPlayer.payTax(board);
+                    System.out.println(currentPlayer.getName() +" has paid taxes,new balance is " + currentPlayer.getBalance());
+                } else if (currentFacility.getName().equals("Station")) {
                     currentPlayer.payFare(diceRoll);
-                    System.out.println("You have paid your fare therefore your balance is" + currentPlayer.getBalance());
+                    System.out.println(currentPlayer.getName()+" has paid fare,new balance is " + currentPlayer.getBalance());
                 }
             }
 
             // Handle bankruptcy
-            if (currentPlayer.getBalance()== 0 && currentPlayer.countPropertyOwned() == 0) {
+            if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() == 0) {
                 // Remove player from the game
                 System.out.println(currentPlayer.getName() + " is out of the game.");
                 players[currentPlayerIndex] = null;
-            } else if ((currentPlayer.getBalance() ==  0 && currentPlayer.countPropertyOwned() >0)) {
-                currentPlayer.handleBankruptcy(currentPlayer,properties);
+            } else if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() > 0) {
+                currentPlayer.handleBankruptcy(currentPlayer, properties);
             }
+
             // Check if game is over
             int playersLeft = 0;
             for (Player player : players) {
@@ -126,16 +133,16 @@ public final class Application {
         }
     }
 
-    /**
-     * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
-     * input.
-     * @param args command line args.
-     */
+            /**
+             * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
+             * input.
+             * @param args command line args.
+             */
 
     public static void main(final String[] args) {
         logger.info("Application Started with args:{}", String.join(",", args));
-        new Application();
         System.out.println("Hello. Welcome to Monopoly.");
+        new Application();
         logger.info("Application closing");
     }
 }

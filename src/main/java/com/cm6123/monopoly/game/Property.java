@@ -125,7 +125,6 @@ public class Property {
         for (Property property : properties) {
             if (newPosition == property.getPosition()) {
                 propertyMatch = property;
-                System.out.println("You have landed on " + property.getName());
             }
         }
 

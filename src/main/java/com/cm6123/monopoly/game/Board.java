@@ -30,6 +30,10 @@ public class Board {
      */
     private int dice;
     /**
+     * contains roll double.
+     */
+    private boolean rolledDouble;
+    /**
      * Board constructor.
      */
     public Board() {
@@ -56,15 +60,21 @@ public class Board {
         int roll1 = n.roll();
         int roll2 = n.roll();
         dice = roll1 + roll2;
-
-        boolean rolledDouble;
         if (roll1 == roll2) {
             rolledDouble = true;
         } else {
             rolledDouble = false;
         }
-
         return dice;
+    }
+
+    /**
+     * checks whether the dice is rolled double.
+     * @return returns the value whether it was a double or not.
+     */
+
+    public boolean rolledDouble() {
+        return rolledDouble;
     }
 
 

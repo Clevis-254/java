@@ -61,21 +61,13 @@ public class Player {
 
     /**
      * creating a method that creates an array based on the number of players entered.
+     * @param player  is the number of players participating.
      * @return players returns the name of the players.
      */
 
-    public static Player[] createPlayersFromInput() {
+    public static Player[] createPlayersFromInput(final int player) {
         Scanner s = new Scanner(System.in);
-        System.out.print("Enter number of players: ");
-        int player = s.nextInt();
-        while (player < 2 || player > 10) {
-            System.out.println("Number of players must be between 2 and 10. Please enter again:");
-            player = s.nextInt();
-        }
-        s.nextLine(); // consume the newline character
-
         Player[] players = new Player[player];
-
         for (int i = 0; i < player; i++) {
             System.out.print("Enter name for player " + (i + 1) + ": ");
             String name = s.nextLine();
@@ -177,12 +169,21 @@ public class Player {
 
     /**
      * calculates the taxes.
+     * @param board  is the board object.
      * @return returns the balance.
      */
-    public int payTax() {
-        int taxPercent = 10; // set tax percent based on rolledDouble flag
-        int taxAmount = (int) (balance * (taxPercent / 100.0));
-        balance -= taxAmount;
+    public int payTax(final Board board) {
+        int taxAmount = 0;
+        if (board.rolledDouble() == true){
+            int taxPercent = 5; // set tax percent based on rolledDouble flag
+             taxAmount = (int) (balance * (taxPercent / 100.0));
+             balance -= taxAmount;
+        } else if(board.rolledDouble() == false){
+            int taxPercent = 10; // set tax percent based on rolledDouble flag
+             taxAmount = (int) (balance * (taxPercent / 100.0));
+            balance -= taxAmount;
+        }
+        System.out.println(taxAmount + "is the amount paid");
         return balance;
     }
 

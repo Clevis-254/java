@@ -11,6 +11,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class PlayerTest {
 
@@ -77,13 +79,22 @@ public class PlayerTest {
     }
 
     @Test
-    public void testTax() {
-        Player p = new Player("James");
-        p.payTax();
-        int expected = 900;
-        int actual = p.getBalance();
-        assertEquals(expected, actual);
+    public void testPayTax() {
+        Board board = mock(Board.class);
+        Player player = new Player("James");
+        Player p = new Player("John");
+
+        // Scenario 1: Rolled double
+        when(board.rolledDouble()).thenReturn(true);
+        player.payTax(board);
+        assertEquals(950, player.getBalance());
+
+        // Scenario 2: Did not roll double
+        when(board.rolledDouble()).thenReturn(false);
+        p.payTax(board);
+        assertEquals(900, p.getBalance());
     }
+
 
     @Test
     public void testFare() {
