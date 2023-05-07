@@ -34,8 +34,8 @@ public final class Application {
             System.out.println("Number of players must be between 2 and 10. Please enter again:");
             numPlayers = s.nextInt();
         }
-        s.nextLine(); // consume the newline character
-        Player[] players = createPlayersFromInput(numPlayers);
+        s.nextLine(); // consumes the newline character
+        Player[] aplayers = createPlayersFromInput(numPlayers);
 
 // Create board, properties and facilities
         Board board = new Board();
@@ -50,7 +50,7 @@ public final class Application {
 
         while (!gameOver) {
             // Get current player
-            Player currentPlayer = players[currentPlayerIndex];
+            Player currentPlayer = aplayers[currentPlayerIndex];
 
             // Roll the dice
             int diceRoll = currentPlayer.rolledFigure(board);
@@ -58,7 +58,9 @@ public final class Application {
 
             // Move the player
             int position = currentPlayer.movePlayer(diceRoll, board);
-
+            if (currentPlayer.getPosition() == 1){
+                System.out.println("You are now on home. you have received salary of £200. your new balance is "+ currentPlayer.getBalance());
+            }
             // Display the location
             Property currentProperty = displayProperties(properties, position);
             Facility currentFacility = displayFacilities(facilities, position);
@@ -79,6 +81,7 @@ public final class Application {
                         String answer = s.nextLine();
                         if (answer.equalsIgnoreCase("Yes")) {
                             currentPlayer.purchaseProperty(currentProperty);
+                            System.out.println("congratulations on your purchase. new balance "+ currentPlayer.getBalance());
                         }
                     }
                 }
@@ -95,26 +98,24 @@ public final class Application {
                     System.out.println(currentPlayer.getName()+" has paid fare,new balance is " + currentPlayer.getBalance());
                 }
             }
-
             // Handle bankruptcy
             if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() == 0) {
                 // Remove player from the game
                 System.out.println(currentPlayer.getName() + " is out of the game.");
-                players[currentPlayerIndex] = null;
+                aplayers[currentPlayerIndex] = null;
             } else if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() > 0) {
                 currentPlayer.handleBankruptcy(currentPlayer, properties);
             }
-
             // Check if game is over
             int playersLeft = 0;
-            for (Player player : players) {
+            for (Player player : aplayers) {
                 if (player != null) {
                     playersLeft++;
                 }
             }
             if (playersLeft == 1) {
                 // Game is over, declare winner
-                for (Player player : players) {
+                for (Player player : aplayers) {
                     if (player != null) {
                         System.out.println(player.getName() + " is the winner!");
                         break;
@@ -123,12 +124,12 @@ public final class Application {
                 gameOver = true;
             }
 
-            System.out.println("\n" + players[(currentPlayerIndex + 1) % players.length].getName() + ", please enter 'roll' to roll the dice: ");
+            System.out.println("\n" + aplayers[(currentPlayerIndex + 1) % aplayers.length].getName() + ", please enter 'roll' to roll the dice: ");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.nextLine();
             if (input.equals("roll")) {
                 //  Move to the next player's turn
-                currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+                currentPlayerIndex = (currentPlayerIndex + 1) % aplayers.length;
             }
         }
     }

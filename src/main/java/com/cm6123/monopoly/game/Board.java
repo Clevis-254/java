@@ -6,7 +6,7 @@ public class Board {
     /**
      * Assigning the board size number.
      */
-    private static final int DEFAULT_BOARD_SIZE = 15;
+    private static final int DEFAULT_BOARD_SIZE = 20;
 
     /**
      * Assigning the number of faces.
@@ -76,6 +76,7 @@ public class Board {
     public boolean rolledDouble() {
         return rolledDouble;
     }
+
 
 
 }

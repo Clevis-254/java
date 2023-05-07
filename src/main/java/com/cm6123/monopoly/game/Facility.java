@@ -65,8 +65,8 @@ public class Facility {
      */
 
     public static void addFacilities(final ArrayList<Facility> facilities) {
-        String[] names = {"Road","Station","Tax-office"};
-        int [] positions = {2,5,6};
+        String[] names = {"Road","Tax-office","Road","Station","Road","Tax-office","Road","Station"};
+        int [] positions = {3,5,7,10,12,15,17,20};
         for (int i = 0; i < names.length; i++) { // use for loop to enter the date into the respective places in the board.
             Facility facility = new Facility(names[i],positions[i]);
             facilities.add(facility);

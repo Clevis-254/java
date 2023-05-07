@@ -157,6 +157,8 @@ public class Player {
             String player = property.getOwner();
             Player owner = new Player(property.getOwner());
             logger.info(name + " has paid rent of " + rent + " to " + owner.getName() + " for " + property.getName());
+        } else if (property.getOwner() == name) {
+            balance = balance;
         }
     }
     /**
@@ -174,11 +176,11 @@ public class Player {
      */
     public int payTax(final Board board) {
         int taxAmount = 0;
-        if (board.rolledDouble() == true){
+        if (board.rolledDouble()){
             int taxPercent = 5; // set tax percent based on rolledDouble flag
              taxAmount = (int) (balance * (taxPercent / 100.0));
              balance -= taxAmount;
-        } else if(board.rolledDouble() == false){
+        } else if(!board.rolledDouble()){
             int taxPercent = 10; // set tax percent based on rolledDouble flag
              taxAmount = (int) (balance * (taxPercent / 100.0));
             balance -= taxAmount;

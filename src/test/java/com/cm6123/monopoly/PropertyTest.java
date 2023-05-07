@@ -18,7 +18,7 @@ public class PropertyTest {
     public void testproperty (){
         ArrayList<Property> properties = new ArrayList<>();
         addProperty(properties);
-        assertEquals(3,properties.size());
+        assertEquals(11,properties.size());
 
     }
 
@@ -52,15 +52,15 @@ public class PropertyTest {
     public void addPropertyTest() {
         ArrayList<Property> properties = new ArrayList<>();
         addProperty(properties);
-        assertEquals("mall", properties.get(0).getName());
-        assertEquals(700, properties.get(0).getPrice());
-        assertEquals(3, properties.get(0).getPosition());
-        assertEquals("market", properties.get(1).getName());
-        assertEquals(800, properties.get(1).getPrice());
-        assertEquals(7, properties.get(1).getPosition());
-        assertEquals("bus", properties.get(2).getName());
-        assertEquals(600, properties.get(2).getPrice());
-        assertEquals(9, properties.get(2).getPosition());
+        assertEquals("newtown-Apartment", properties.get(0).getName());
+        assertEquals(5500, properties.get(0).getPrice());
+        assertEquals(2, properties.get(0).getPosition());
+        assertEquals("water-park", properties.get(1).getName());
+        assertEquals(2500, properties.get(1).getPrice());
+        assertEquals(4, properties.get(1).getPosition());
+        assertEquals("roath-park", properties.get(2).getName());
+        assertEquals(5000, properties.get(2).getPrice());
+        assertEquals(6, properties.get(2).getPosition());
     }
 
     @Test

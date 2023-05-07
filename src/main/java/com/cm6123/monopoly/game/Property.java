@@ -75,9 +75,9 @@ public class Property {
      */
 
     public static void addProperty(final ArrayList<Property> properties) {
-        String[] names = {"mall", "market", "bus"};
-        int[] prices = {700, 800, 600};
-        int[] positions = {3, 7, 9};
+        String[] names = {"newtown-Apartment", "water-park", "roath-park","young-hotel","oldtown cinema","drive through mall","zoo world","cinema","Roath hotel","new park","old apartment"};
+        int[] prices = {5500, 2500, 5000,6000,1500,1000,2500,1500,6000,3000,5500};
+        int[] positions = {2, 4, 6,8,9,11,13,14,16,18,19};
 
         for (int i = 0; i < names.length; i++) { // use for loop to enter the date into the respective places in the board.
             Property property = new Property(names[i], prices[i], positions[i]);

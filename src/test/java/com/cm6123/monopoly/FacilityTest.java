@@ -22,7 +22,7 @@ public class FacilityTest {
     public void testfacility (){
         ArrayList<Facility> facilities = new ArrayList<>();
         addFacilities(facilities);
-        assertEquals(3,facilities.size());
+        assertEquals(8,facilities.size());
 
     }
 
@@ -32,17 +32,17 @@ public class FacilityTest {
         Facility.addFacilities(facilities);
 
         // Check that the size of the list is 3
-        assertEquals(3, facilities.size());
+        assertEquals(8, facilities.size());
 
         // Check that the facilities were added correctly
         assertEquals("Road", facilities.get(0).getName());
-        assertEquals(2, facilities.get(0).getPosition());
+        assertEquals(3, facilities.get(0).getPosition());
 
-        assertEquals("Station", facilities.get(1).getName());
+        assertEquals("Tax-office", facilities.get(1).getName());
         assertEquals(5, facilities.get(1).getPosition());
 
-        assertEquals("Tax-office", facilities.get(2).getName());
-        assertEquals(6, facilities.get(2).getPosition());
+        assertEquals("Road", facilities.get(2).getName());
+        assertEquals(7, facilities.get(2).getPosition());
     }
 
 
