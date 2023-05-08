@@ -19,19 +19,25 @@ public class PlayerTest {
     @Test
     public void testMovePlayer() {
         Board board = new Board();
+        //Given that the user john wants to move position.
         Player player = new Player("John");
+        // when john rolls a total of 4 in both dices.
         int newPosition = player.movePlayer(4, board);
+        // then the new position of john will be 5 as 4 + 1 = 5.
         assertEquals(5, newPosition);
     }
 
     @Test
     public void testBalance() {
         Board b = new Board();
+        // Given that the user Henry wants to get 200 pounds for passing through home.
         Player p = new Player("Henry");
         p.movePlayer(10, b);
         assertEquals(11, p.getPosition());
+        //when the user rolls 11 the new position will be 1 as 10 + 10 + 1 = 21 - 20 =1
         p.movePlayer(10, b);
         assertEquals(1, p.getPosition());
+        // then the new balance will be 1200 pounds.
         assertEquals(1200, p.getBalance());
     }
 
@@ -41,17 +47,25 @@ public class PlayerTest {
         Property d = new Property("bus", 800, 1);
         Property m = new Property("market", 1200, 2);
         Property w = new Property("mall", 700, 3);
+        // Given that John wants to purchase the property.
         p.purchaseProperty(d);
+        // when John's balance is greater than the property price.
         assertEquals("John", d.getOwner());
+        // then John is able to purchase the property leading to reduction in his balance.
         assertEquals(200, p.getBalance());
-
+        // Given that Derrick wants to purchase the market property.
         Player a = new Player("Derrick");
+        // when Derrick's balance is less than the property's price
         a.purchaseProperty(m);
+        // then Derrick will not be able to purchase the selected property.
         assertNull(null, m.getOwner());
         assertEquals(1000, a.getBalance());
 
+        // given that sharon wants to purchase a property.
         Player t = new Player("sharon");
+        // when the property already has the owner ,owner  wants to keep the property
         t.purchaseProperty(d);
+        // then sharon cannot purchase the selected property.
         assertEquals("John", d.getOwner());
     }
 
@@ -81,18 +95,28 @@ public class PlayerTest {
     @Test
     public void testPayTax() {
         Board board = mock(Board.class);
+        // Given that James wants to pay tax
         Player player = new Player("James");
+        // Given that John wants to pay tax.
         Player p = new Player("John");
 
-        // Scenario 1: Rolled double
+        // when James rolls a double.
         when(board.rolledDouble()).thenReturn(true);
+        // then the tax percentage will be 5% hence the 950 balance.
         player.payTax(board);
         assertEquals(950, player.getBalance());
 
-        // Scenario 2: Did not roll double
+        // when John did not roll double.
         when(board.rolledDouble()).thenReturn(false);
+        // then the tax percentage will be 10% hence the 900 balance.
         p.payTax(board);
         assertEquals(900, p.getBalance());
+
+        // when James does not roll a double
+        when(board.rolledDouble()).thenReturn(false);
+        // then the tax percentage will be 10% hence 850 in balance.
+        player.payTax(board);
+        assertEquals(855, player.getBalance());
     }
 
 

@@ -185,7 +185,6 @@ public class Player {
              taxAmount = (int) (balance * (taxPercent / 100.0));
             balance -= taxAmount;
         }
-        System.out.println(taxAmount + "is the amount paid");
         return balance;
     }
 
