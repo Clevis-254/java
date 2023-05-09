@@ -3,7 +3,7 @@ package com.cm6123.monopoly.game;
 
 import java.util.ArrayList;
 
-public class Property {
+public class Property implements Basics{
     /**
      * the name of the property.
      */
@@ -60,7 +60,7 @@ public class Property {
      * method that return the position of property.
      */
 
-    public Integer getPosition(){
+    public int getPosition(){
         return position;
     }
     /**

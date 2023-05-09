@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.cm6123.monopoly.game.Facility.displayFacilities;
@@ -28,11 +29,21 @@ public final class Application {
     private Application() {
         // Create players
         Scanner s = new Scanner(System.in);
-        System.out.print("Enter the number of players playing: ");
-        int numPlayers = s.nextInt();
-        while (numPlayers < 2 || numPlayers > 10) {
-            System.out.println("Number of players must be between 2 and 10. Please enter again:");
-            numPlayers = s.nextInt();
+        int numPlayers = 0;
+        boolean validInput = false;
+        while (!validInput) {
+            try {
+                System.out.print("Enter the number of players playing: ");
+                numPlayers = s.nextInt();
+                if (numPlayers < 2 || numPlayers > 10) {
+                    System.out.println("Number of players must be between 2 and 10.");
+                } else {
+                    validInput = true;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number between 2 and 10.");
+                s.next(); // consume the invalid input
+            }
         }
         s.nextLine(); // consumes the newline character
         Player[] aplayers = createPlayersFromInput(numPlayers);

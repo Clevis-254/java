@@ -97,8 +97,6 @@ public class PlayerTest {
         Board board = mock(Board.class);
         // Given that James wants to pay tax
         Player player = new Player("James");
-        // Given that John wants to pay tax.
-        Player p = new Player("John");
 
         // when James rolls a double.
         when(board.rolledDouble()).thenReturn(true);
@@ -106,6 +104,8 @@ public class PlayerTest {
         player.payTax(board);
         assertEquals(950, player.getBalance());
 
+        // Given that John wants to pay tax.
+        Player p = new Player("John");
         // when John did not roll double.
         when(board.rolledDouble()).thenReturn(false);
         // then the tax percentage will be 10% hence the 900 balance.
@@ -122,8 +122,11 @@ public class PlayerTest {
 
     @Test
     public void testFare() {
+        //Given that john wants to pay fare.
         Player p = new Player("John");
+        // when John rolls a seven.
         p.payFare(7);
+        // then the expected balance will be 930 as 1000 - 70.
         int expected = 930;
         int actual = p.getBalance();
         assertEquals(expected, actual);

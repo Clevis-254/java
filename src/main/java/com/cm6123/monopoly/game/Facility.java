@@ -3,7 +3,7 @@ package com.cm6123.monopoly.game;
 import java.util.ArrayList;
 
 
-public class Facility {
+public class Facility implements Basics{
 
     /**
      * facilities names that shows the name of the facilities.
