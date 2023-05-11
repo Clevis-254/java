@@ -65,7 +65,7 @@ public class Player {
      * @return players returns the name of the players.
      */
 
-    public static Player[] createPlayersFromInput(final int player) {
+    public static Player[] inputPlayers(final int player) {
         Scanner s = new Scanner(System.in);
         Player[] players = new Player[player];
         for (int i = 0; i < player; i++) {
@@ -73,7 +73,6 @@ public class Player {
             String name = s.nextLine();
             players[i] = new Player(name);
         }
-
         return players;
     }
 

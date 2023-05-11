@@ -11,7 +11,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import static com.cm6123.monopoly.game.Facility.displayFacilities;
-import static com.cm6123.monopoly.game.Player.createPlayersFromInput;
+import static com.cm6123.monopoly.game.Player.inputPlayers;
 import static com.cm6123.monopoly.game.Property.addProperty;
 import static com.cm6123.monopoly.game.Property.displayProperties;
 
@@ -27,7 +27,7 @@ public final class Application {
 
 
     private Application() {
-        // Create players
+        // inserting players into the system
         Scanner s = new Scanner(System.in);
         int numPlayers = 0;
         boolean validInput = false;
@@ -46,38 +46,38 @@ public final class Application {
             }
         }
         s.nextLine(); // consumes the newline character
-        Player[] aplayers = createPlayersFromInput(numPlayers);
+        Player[] aplayers = inputPlayers(numPlayers);
 
-// Create board, properties and facilities
+// Creating the board, inserting properties and facilities into the board.
         Board board = new Board();
         ArrayList<Property> properties = new ArrayList<>();
         addProperty(properties);
         ArrayList<Facility> facilities = new ArrayList<>();
         Facility.addFacilities(facilities);
 
-// Game loop
+        // inserting the game condition that determines the model of the gane.
         boolean gameOver = false;
         int currentPlayerIndex = 0;
 
         while (!gameOver) {
-            // Get current player
+            // Getting player from the list in order for them to play the game
             Player currentPlayer = aplayers[currentPlayerIndex];
 
-            // Roll the dice
+            // Rolling the dice
             int diceRoll = currentPlayer.rolledFigure(board);
             System.out.println(currentPlayer.getName() + " has rolled a " + diceRoll);
 
-            // Move the player
+            // Moving player based on the number of rolled dice
             int position = currentPlayer.movePlayer(diceRoll, board);
             if (currentPlayer.getPosition() == 1){
                 System.out.println("You are now on home. you have received salary of £200. your new balance is "+ currentPlayer.getBalance());
             }
-            // Display the location
+            // Displaying the property or facility landed on by the player.
             Property currentProperty = displayProperties(properties, position);
             Facility currentFacility = displayFacilities(facilities, position);
-
+            // checking the property where one has landed on
             if (currentProperty != null) {
-                System.out.println("You have landed on "+currentProperty.getName());
+                System.out.println("You have landed on "+currentProperty.getName()); // getting the property name
                 if (currentProperty.getOwner() != null) {
                     currentPlayer.payRent(currentProperty);
                     int rent = currentProperty.getRent();
@@ -100,7 +100,7 @@ public final class Application {
 
             if (currentFacility != null) {
                 currentFacility.getName();
-                System.out.println(currentPlayer.getName() +" has landed on "+ currentFacility.getName());
+                System.out.println(currentPlayer.getName() +" has landed on "+ currentFacility.getName()); // getting the facility name when the player lands on it.
                 if (currentFacility.getName().equals("Tax-office")) {
                     currentPlayer.payTax(board);
                     System.out.println(currentPlayer.getName() +" has paid taxes,new balance is " + currentPlayer.getBalance());
@@ -109,9 +109,9 @@ public final class Application {
                     System.out.println(currentPlayer.getName()+" has paid fare,new balance is " + currentPlayer.getBalance());
                 }
             }
-            // Handle bankruptcy
+            // Handling bankrupcy
             if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() == 0) {
-                // Remove player from the game
+                // Removing player from the game when the player goes bankrupt.
                 System.out.println(currentPlayer.getName() + " is out of the game.");
                 aplayers[currentPlayerIndex] = null;
             } else if (currentPlayer.getBalance() == 0 && currentPlayer.countPropertyOwned() > 0) {
@@ -125,7 +125,7 @@ public final class Application {
                 }
             }
             if (playersLeft == 1) {
-                // Game is over, declare winner
+                // Game is over, declare winner and close the game.
                 for (Player player : aplayers) {
                     if (player != null) {
                         System.out.println(player.getName() + " is the winner!");
@@ -145,11 +145,11 @@ public final class Application {
         }
     }
 
-            /**
-             * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
-             * input.
-             * @param args command line args.
-             */
+    /**
+     * main entry point.  If args provided, result is displayed and program exists. Otherwise, user is prompted for
+     * input.
+     * @param args command line args.
+     */
 
     public static void main(final String[] args) {
         logger.info("Application Started with args:{}", String.join(",", args));
